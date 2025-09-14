@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzería Delizia</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde-vivo: #1e8449;
+  --rojo-tomate: #e74c3c;
+  --blanco: #ffffff;
+  --gris-oscuro: #2c3e50;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--blanco);
+  color: var(--gris-oscuro);
+  line-height: 1.6;
+}
+
+header {
+  position: sticky;
+  top:0;
+  z-index: 100;
+  background: var(--verde-vivo);
+  color: var(--blanco);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding: 15px 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  margin-bottom: 8px;
+}
+
+nav {
+  display:flex;
+  gap:15px;
+}
+
+nav button {
+  padding:10px 20px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-weight:600;
+  transition: all 0.3s;
+  background: var(--blanco);
+  color: var(--verde-vivo);
+  font-size:1rem;
+}
+
+nav button:hover {
+  background: var(--rojo-tomate);
+  color: var(--blanco);
+}
+
+/* Hero */
+.hero {
+  background: url('https://estaticos-cdn.prensaiberica.es/clip/f22eedd4-68b0-4141-8386-1063cc48a4c1_original-libre-aspect-ratio_default_0.webp') center/cover no-repeat;
+  height: 70vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: var(--blanco);
+  text-align:center;
+  flex-direction: column;
+  position: relative;
+}
+
+.hero-content {
+  position: relative;
+  z-index:1;
+  max-width:800px;
+  padding:20px;
+  animation: fadeIn 1s ease-out;
+}
+
+.hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size:1.2rem;
+}
+
+main {
+  padding:60px 20px;
+}
+
+.section {
+  max-width:1100px;
+  margin:0 auto 60px auto;
+  text-align:center;
+  padding: 50px 20px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.section h2 {
+  font-size:2rem;
+  font-family: 'Playfair Display', serif;
+  margin-bottom:20px;
+  color: var(--verde-vivo);
+}
+
+/* Menú */
+.menu-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+
+.menu-category {
+  margin-bottom:50px;
+}
+
+.menu-category h3 {
+  font-size:1.8rem;
+  color: var(--rojo-tomate);
+  margin-bottom:20px;
+  text-align:left;
+}
+
+.menu-item {
+  background: var(--blanco);
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 5px 15px rgba(0,0,0,0.15);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+  transform: translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+.menu-item img {
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+.menu-item .content {
+  padding:15px;
+}
+
+.menu-item h4 {
+  font-family:'Playfair Display', serif;
+  color: var(--rojo-tomate);
+  margin-bottom:8px;
+}
+
+.menu-item p {
+  font-size:0.95rem;
+}
+
+.menu-item .price {
+  font-weight:bold;
+  color: var(--verde-vivo);
+  margin-top:8px;
+}
+
+/* Reservas */
+.reservation-form {
+  max-width:600px;
+  margin:20px auto 0 auto;
+  text-align:left;
+  background: var(--blanco);
+  padding:30px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+.reservation-form label {
+  display:block;
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+.reservation-form input, .reservation-form select {
+  width:100%;
+  padding:10px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:1rem;
+}
+
+.reservation-form button {
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background: var(--rojo-tomate);
+  color: var(--blanco);
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.reservation-form button:hover {
+  background: var(--verde-vivo);
+}
+
+/* Modal */
+.modal {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.65);
+  justify-content:center;
+  align-items:center;
+  z-index:200;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background: var(--blanco);
+  border-radius:15px;
+  width:90%;
+  max-width:1000px;
+  max-height:90%;
+  overflow-y:auto;
+  position: relative;
+  padding:30px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  animation: scaleIn 0.3s ease-out;
+}
+
+.modal h2 {
+  text-align:center;
+  margin-bottom:25px;
+  color: var(--verde-vivo);
+}
+
+.modal-close {
+  position:absolute;
+  top:15px;
+  right:15px;
+  background: var(--rojo-tomate);
+  color: var(--blanco);
+  border:none;
+  border-radius:50%;
+  width:35px;
+  height:35px;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+
+footer {
+  background: var(--verde-vivo);
+  color: var(--blanco);
+  text-align:center;
+  padding:25px 20px;
+}
+
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+@keyframes scaleIn { from {transform:scale(0.9);} to {transform:scale(1);} }
+
+@media(max-width:768px){
+  header h1 { font-size:2rem; }
+  .hero h2 { font-size:2.2rem; }
+  nav { flex-wrap:wrap; justify-content:center; }
+  nav button { margin:5px; font-size:0.9rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pizzería Delizia</h1>
+  <nav>
+    <button onclick="openModal()">Menú</button>
+    <button onclick="scrollToSection('reservas')">Reservas</button>
+    <button onclick="scrollToSection('contacto')">Contacto</button>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <h2>Sabores auténticos, ingredientes frescos</h2>
+    <p>Disfruta de nuestras pizzas artesanales elaboradas con pasión.</p>
+  </div>
+</div>
+
+<main>
+  <section class="section" id="bienvenida">
+    <h2>Bienvenido</h2>
+    <p>En Pizzería Delizia cada pizza se hace con ingredientes de primera calidad, cuidando cada detalle para que disfrutes de un sabor único.</p>
+  </section>
+
+  <section class="section" id="reservas">
+    <h2>Reservas</h2>
+    <p>Reserva tu mesa fácilmente y disfruta de la mejor experiencia gastronómica.</p>
+    <form class="reservation-form">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" placeholder="Tu nombre" required>
+      <label for="fecha">Fecha</label>
+      <input type="date" id="fecha" required>
+      <label for="personas">Personas</label>
+      <select id="personas" required>
+        <option value="">Selecciona</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+      </select>
+      <button type="submit">Reservar</button>
+    </form>
+  </section>
+</main>
+
+<!-- Modal Menú -->
+<div class="modal" id="menuModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Nuestro Menú</h2>
+
+    <div class="menu-category">
+      <h3>🍕 Pizzas</h3>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1601924638867-3ecf9c1f07ff?auto=format&fit=crop&w=400&q=80" alt="Pizza Margherita">
+          <div class="content"><h4>Margherita</h4><p>Tomate, mozzarella y albahaca fresca.</p><p class="price">€9.50</p></div>
+        </div>
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1617196034925-bf7a2f1e74f1?auto=format&fit=crop&w=400&q=80" alt="Pizza Pepperoni">
+          <div class="content"><h4>Pepperoni</h4><p>Queso mozzarella, salsa de tomate y pepperoni.</p><p class="price">€10.00</p></div>
+        </div>
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1628840042765-356c06364de1?auto=format&fit=crop&w=400&q=80" alt="Pizza Vegetariana">
+          <div class="content"><h4>Vegetariana</h4><p>Tomate, pimientos, champiñones y aceitunas.</p><p class="price">€11.00</p></div>
+        </div>
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1628840042765-356c06364de1?auto=format&fit=crop&w=400&q=80" alt="Pizza Hawaiana">
+          <div class="content"><h4>Hawaiana</h4><p>Jamón, piña y queso mozzarella.</p><p class="price">€11.50</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h3>🥗 Ensaladas</h3>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1556912167-f556f1f39bfb?auto=format&fit=crop&w=400&q=80" alt="Ensalada César">
+          <div class="content"><h4>Ensalada César</h4><p>Lechuga, pollo, parmesano y aderezo César.</p><p class="price">€7.50</p></div>
+        </div>
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1604908177523-5e58bbded1b6?auto=format&fit=crop&w=400&q=80" alt="Ensalada Caprese">
+          <div class="content"><h4>Caprese</h4><p>Tomate, mozzarella fresca y albahaca.</p><p class="price">€8.00</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h3>🍰 Postres</h3>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1604908177523-5e58bbded1b6?auto=format&fit=crop&w=400&q=80" alt="Tiramisú">
+          <div class="content"><h4>Tiramisú</h4><p>Postre italiano con mascarpone y café.</p><p class="price">€5.50</p></div>
+        </div>
+        <div class="menu-item">
+          <img src="https://images.unsplash.com/photo-1617196034925-0d3fca?auto=format&fit=crop&w=400&q=80" alt="Helado">
+          <div class="content"><h4>Helado</h4><p>Variedad de sabores, fresco y delicioso.</p><p class="price">€4.50</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer id="contacto">
+  <p>📍 Calle Principal 123, Ciudad | ☎ 555-123-456 | 📧 contacto@pizzeriadelizia.com</p>
+</footer>
+
+<script>
+const modal = document.getElementById('menuModal');
+function openModal(){ modal.style.display = 'flex'; }
+function closeModal(){ modal.style.display = 'none'; }
+window.onclick = function(e){ if(e.target === modal){ closeModal(); } }
+
+function scrollToSection(id){
+  const section = document.getElementById(id);
+  if(section){ section.scrollIntoView({behavior:'smooth'}); }
+}
+</script>
+
+</body>
+</html>
